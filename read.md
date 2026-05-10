@@ -165,6 +165,7 @@ Get recommended items
 GET /api/x_smart/recommendations
 Apply for internship
 POST /api/x_smart/internship/apply
+
 ⚙️ React Frontend Setup
 cd client
 npm install
@@ -186,7 +187,9 @@ export const instance = axios.create({
 2. Connect React using REST API
 3. Deploy React on Netlify/Vercel
 4. Use ServiceNow as live backend
+
 📌 Why Smart Student Connect?
+
 Removes communication gaps
 One-stop solution for all opportunities
 Boosts participation and visibility
