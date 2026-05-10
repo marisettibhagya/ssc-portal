@@ -76,3 +76,126 @@ The platform uses **REST APIs** for real-time communication between the web clie
 ---
 
 ## 📐 System Architecture
+
+         ┌────────────────────────────┐
+         │        React Frontend       │
+         │  - Profile UI               │
+         │  - Event & Internship UI    │
+         │  - Team Management          │
+         │  - AI Assistant             │
+         └─────────────▲──────────────┘
+                       │ REST API (Axios)
+                       ▼
+┌──────────────────────────────────────────────────┐
+│                ServiceNow Backend                 │
+│  - Custom Tables (Student, Events, Teams)        │
+│  - Scripted REST APIs                            │
+│  - ACL Security                                  │
+│  - Flow Designer Workflows                       │
+│  - Business Rules                                │
+└───────────────▲──────────────────────────────────┘
+                │
+                ▼
+     ┌─────────────────────────┐
+     │   AI Recommendation     │
+     │ - Skill Matching        │
+     │ - Event Suggestion      │
+     │ - Internship Ranking    │
+     └─────────────────────────┘
+
+     
+---
+
+## 📁 Folder Structure
+
+smart-student-connect/
+│
+├── client/ (React)
+│ ├── src/
+│ │ ├── components/
+│ │ ├── pages/
+│ │ ├── hooks/
+│ │ ├── services/
+│ │ │ └── api.js
+│ │ ├── App.js
+│ │ └── index.js
+│ └── package.json
+│
+└── service-now/ (Backend)
+├── tables/
+├── script-includes/
+├── flows/
+├── acl-rules/
+└── api-endpoints/
+
+
+---
+
+## 🧩 ServiceNow Tables
+
+| Table Name | Purpose |
+|-----------|---------|
+| **u_student_profile** | Student personal and skill info |
+| **u_events** | Hackathons, sports, cultural events |
+| **u_teams** | Team creation & mapping |
+| **u_internships** | Skill services & internships |
+| **u_applications** | Internship applications |
+| **u_ai_recommendations** | AI suggestion tracking |
+
+---
+
+## 🔐 ACL Setup (Security)
+
+Each table has:
+- Read ACL  
+- Write ACL  
+- Create ACL  
+- Delete ACL  
+- Script conditions for role-based access  
+
+Example ACL Script:
+
+```javascript
+answer = gs.hasRole('student') || gs.hasRole('admin');
+
+🔗 API Endpoints (ServiceNow → React)
+Get all events
+GET /api/x_smart/events
+Create student profile
+POST /api/x_smart/student
+Join a team
+POST /api/x_smart/team/join
+Get recommended items
+GET /api/x_smart/recommendations
+Apply for internship
+POST /api/x_smart/internship/apply
+⚙️ React Frontend Setup
+cd client
+npm install
+npm start
+
+In api.js:
+
+export const instance = axios.create({
+  baseURL: "https://<instance>.service-now.com",
+  auth: {
+    username: "<user>",
+    password: "<pwd>"
+  }
+});
+🚀 Running the Project
+1. Configure ServiceNow tables, API, flows, ACLs
+2. Connect React using REST API
+3. Deploy React on Netlify/Vercel
+4. Use ServiceNow as live backend
+📌 Why Smart Student Connect?
+Removes communication gaps
+One-stop solution for all opportunities
+Boosts participation and visibility
+Industry connection + campus engagement
+AI that understands and guides every student
+⭐ Contribute / Contact
+
+Feel free to fork, customize, and expand the project.
+For any doubts or enhancements, reach out anytime.
+
