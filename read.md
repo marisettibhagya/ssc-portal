@@ -76,7 +76,6 @@ The platform uses **REST APIs** for real-time communication between the web clie
 ---
 
 ## 📐 System Architecture
-
          ┌────────────────────────────┐
          │        React Frontend       │
          │  - Profile UI               │
@@ -102,9 +101,6 @@ The platform uses **REST APIs** for real-time communication between the web clie
      │ - Event Suggestion      │
      │ - Internship Ranking    │
      └─────────────────────────┘
-
-     
----
 
 ## 📁 Folder Structure
 
@@ -183,7 +179,9 @@ export const instance = axios.create({
     password: "<pwd>"
   }
 });
+
 🚀 Running the Project
+
 1. Configure ServiceNow tables, API, flows, ACLs
 2. Connect React using REST API
 3. Deploy React on Netlify/Vercel
@@ -194,8 +192,17 @@ One-stop solution for all opportunities
 Boosts participation and visibility
 Industry connection + campus engagement
 AI that understands and guides every student
-⭐ Contribute / Contact
 
-Feel free to fork, customize, and expand the project.
-For any doubts or enhancements, reach out anytime.
+🤝 Contributing
+
+We welcome contributions to make Smart Student Connect better.
+How to Contribute
+# 1. Fork the repositoryClick on the "Fork" button at the top-right of this repo.
+# 2. Create a new feature branchgit checkout -b feature/AmazingFeature
+#3. Commit your changesgit commit -m "Add AmazingFeature"
+# 4. Push your branchgit push origin feature/AmazingFeature
+# 5. Open a Pull RequestSubmit your PR for review.
+
+
+
 
