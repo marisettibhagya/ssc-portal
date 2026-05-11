@@ -188,7 +188,8 @@ userID
 role
 token
 
-5️⃣ Frontend–Backend Data Flow (Very Important for AI Scoring)
+5️⃣ Frontend–Backend Data Flow 
+
 [React Native UI]
       │
       │ Login (username/password)
@@ -255,8 +256,13 @@ Role-based UI in React
 HTTPS REST communication
 
 8️⃣ Architecture Score Boosters
+
 ✔ API-driven architecture
+
 ✔ Clean separation of UI, Logic, and Data
+
 ✔ ServiceNow as a secure backend
+
 ✔ Mobile-first approach
+
 ✔ Modular component-based design
