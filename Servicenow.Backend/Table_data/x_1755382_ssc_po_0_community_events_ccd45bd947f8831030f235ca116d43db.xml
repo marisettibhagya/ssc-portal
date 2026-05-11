@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2026-05-11 10:18:53">
+<x_1755382_ssc_po_0_community_events action="INSERT_OR_UPDATE">
+<description>Summer Internship for 2027 passedout students</description>
+<email>redghj</email>
+<event_date>2026-05-23 08:44:26</event_date>
+<event_end_date>2026-06-23 08:44:31</event_end_date>
+<event_name>Summer Internship</event_name>
+<event_type>400</event_type>
+<max_team_size>10</max_team_size>
+<organized_by display_value="Alva Pennigton">ca826bf03710200044e0bfc8bcbe5d89</organized_by>
+<registration_deadline>2026-05-13</registration_deadline>
+<status>100</status>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2026-05-11 08:45:26</sys_created_on>
+<sys_id>ccd45bd947f8831030f235ca116d43db</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2026-05-11 08:45:26</sys_updated_on>
+<venue>Aditya Univeristy</venue>
+</x_1755382_ssc_po_0_community_events>
+</unload>

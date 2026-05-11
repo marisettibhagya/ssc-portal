@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2026-05-11 10:19:03">
+<x_1755382_ssc_po_0_community_events action="INSERT_OR_UPDATE">
+<description>24-hour coding challenge</description>
+<email>codefest@college.edu</email>
+<event_date>2026-06-15 09:28:03</event_date>
+<event_end_date>2026-06-16 09:28:23</event_end_date>
+<event_name>CodeFest 2026</event_name>
+<event_type>100</event_type>
+<max_team_size>4</max_team_size>
+<organized_by display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</organized_by>
+<registration_deadline>2026-06-10</registration_deadline>
+<status>100</status>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2026-05-11 09:29:39</sys_created_on>
+<sys_id>dc4fdbd1477c831030f235ca116d43bb</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2026-05-11 09:29:39</sys_updated_on>
+<venue>Main Auditorium</venue>
+</x_1755382_ssc_po_0_community_events>
+</unload>

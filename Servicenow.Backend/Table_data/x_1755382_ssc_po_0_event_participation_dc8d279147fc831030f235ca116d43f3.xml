@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2026-05-11 10:34:31">
+<x_1755382_ssc_po_0_event_participation action="INSERT_OR_UPDATE">
+<event display_value="58e77e514738831030f235ca116d4360">58e77e514738831030f235ca116d4360</event>
+<participation_date>2026-05-11</participation_date>
+<participation_status>registered</participation_status>
+<role>member</role>
+<student display_value="09cd1311477c831030f235ca116d4328">09cd1311477c831030f235ca116d4328</student>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2026-05-11 10:30:00</sys_created_on>
+<sys_id>dc8d279147fc831030f235ca116d43f3</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2026-05-11 10:30:00</sys_updated_on>
+<team display_value="0afb63dd47bc831030f235ca116d4362">0afb63dd47bc831030f235ca116d4362</team>
+</x_1755382_ssc_po_0_event_participation>
+</unload>

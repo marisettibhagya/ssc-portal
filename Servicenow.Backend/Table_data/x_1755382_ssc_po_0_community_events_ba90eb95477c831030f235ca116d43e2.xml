@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2026-05-11 10:18:35">
+<x_1755382_ssc_po_0_community_events action="INSERT_OR_UPDATE">
+<description>Robotics competition</description>
+<email>roborace@college.edu</email>
+<event_date>2026-08-12 15:00:00</event_date>
+<event_end_date>2026-08-13 01:00:00</event_end_date>
+<event_name>RoboRace</event_name>
+<event_type>400</event_type>
+<max_team_size>3</max_team_size>
+<organized_by display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</organized_by>
+<registration_deadline>2026-08-05</registration_deadline>
+<status>100</status>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2026-05-11 09:34:48</sys_created_on>
+<sys_id>ba90eb95477c831030f235ca116d43e2</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2026-05-11 09:34:48</sys_updated_on>
+<venue>Robotics Lab</venue>
+</x_1755382_ssc_po_0_community_events>
+</unload>

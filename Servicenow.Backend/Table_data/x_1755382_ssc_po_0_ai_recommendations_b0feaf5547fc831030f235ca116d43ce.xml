@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2026-05-11 10:37:05">
+<x_1755382_ssc_po_0_ai_recommendations action="INSERT_OR_UPDATE">
+<ai_score>93</ai_score>
+<generated_date>2026-05-11</generated_date>
+<recommendation_type>intenship</recommendation_type>
+<recommended_item/>
+<student display_value="30e79391473c831030f235ca116d43dd">30e79391473c831030f235ca116d43dd</student>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2026-05-11 10:35:59</sys_created_on>
+<sys_id>b0feaf5547fc831030f235ca116d43ce</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2026-05-11 10:35:59</sys_updated_on>
+</x_1755382_ssc_po_0_ai_recommendations>
+</unload>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2026-05-11 10:17:50">
+<x_1755382_ssc_po_0_community_events action="INSERT_OR_UPDATE">
+<description>AI and ML hands-on workshop</description>
+<email>aitalk@college.edu</email>
+<event_date>2026-07-05 17:00:00</event_date>
+<event_end_date>2026-07-05 23:00:00</event_end_date>
+<event_name>TechTalk AI</event_name>
+<event_type>400</event_type>
+<max_team_size>1</max_team_size>
+<organized_by display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</organized_by>
+<registration_deadline>2026-07-01</registration_deadline>
+<status>100</status>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2026-05-11 09:32:48</sys_created_on>
+<sys_id>59df1355477c831030f235ca116d43ab</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2026-05-11 09:32:48</sys_updated_on>
+<venue>Seminar Hall</venue>
+</x_1755382_ssc_po_0_community_events>
+</unload>
