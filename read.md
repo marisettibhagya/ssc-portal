@@ -76,6 +76,34 @@ The platform uses **REST APIs** for real-time communication between the web clie
 ---
 
 ## System Architecture 
+
+## 📌 Architecture Definition — Smart Student Connect
+
+Smart Student Connect is a modular, scalable ServiceNow-based student issue management system.  
+It connects students, faculty, and admin teams under one centralized platform to submit, track, assign, and resolve academic and technical requests.
+
+The architecture ensures:
+- Clear separation of roles
+- Optimized workflows
+- Real-time data insights
+- Secure access control
+- Integration-ready structure for AI and automation
+
+Architecture Table
+
+## 🗂 Architecture Components Table
+
+| Layer / Module            | Description |
+|---------------------------|-------------|
+| **User Interface Layer**  | Student Portal, Staff Dashboard, Admin Console |
+| **Process Layer**         | Workflows, SLAs, Notifications, Assignment Rules |
+| **Data Layer**            | Custom tables for requests, actions, escalations |
+| **Business Logic Layer**  | Business Rules, Client Scripts, UI Policies |
+| **Security Layer**        | Roles, ACLs, Access Policies |
+| **Automation Layer**      | Flow Designer, Scheduled Jobs, Notifications |
+| **Integration Layer**     | GitHub repo sync, REST APIs |
+| **AI/Analytics Layer**    | Dashboards, Reports, Predictive analytics readiness |
+
 Tech Stack:
 
 Frontend: React Native (Expo)
@@ -255,14 +283,79 @@ ACLs protect ServiceNow data
 Role-based UI in React
 HTTPS REST communication
 
-8️⃣ Architecture Score Boosters
+## 🏗 Full Architecture Explanation — Smart Student Connect
 
-✔ API-driven architecture
+1. **Frontend / UI Layer**
+   - Student Portal for submitting issues
+   - Staff dashboard for handling assigned tasks
+   - Admin controls for system configuration
 
-✔ Clean separation of UI, Logic, and Data
+2. **Backend Logic Layer**
+   - Business Rules enforce data consistency
+   - UI Actions trigger custom actions (Assign, Resolve, Reopen)
+   - Client Scripts provide validations and dynamic behaviors
+   - UI Policies handle form visibility and mandatory logic
 
-✔ ServiceNow as a secure backend
+3. **Workflow & Process Automation**
+   - Flow Designer handles:
+     - Auto-assignment
+     - Notifications
+     - Escalations
+     - SLA monitoring
+   - Scheduled jobs for reminders
+   - Real-time updates for student status tracking
 
-✔ Mobile-first approach
+4. **Data Architecture (Tables)**
+   - **ssc_request** → Main student issue table  
+   - **ssc_task** → Staff action/task tracking  
+   - **ssc_student_profile** → Student details  
+   - **ssc_staff_profile** → Staff details  
+   - **ssc_audit_log** → History tracking and AI analysis
 
-✔ Modular component-based design
+5. **Security Architecture**
+   - Roles:
+     - `ssc_student`
+     - `ssc_staff`
+     - `ssc_admin`
+   - ACLs protect: table, field, record levels
+   - Audit logs capture every change
+
+6. **Analytics & Insights**
+   - Dashboards for admin, staff, and faculty
+   - Real-time KPIs: pending tasks, SLA breaches, student satisfaction
+   - Reports for escalation tracking and performance analysis
+
+7. **Integration Architecture**
+   - GitHub repository for version control
+   - REST API endpoints for external systems
+   - Supports future AI modules like:
+     - Predictive Intelligence
+     - Virtual Agent chatbot
+
+
+## 🌐 Overall System Architecture Summary
+
+Smart Student Connect uses a layered architecture combining UI, process automation, data management, and security layers to deliver a seamless student–staff communication platform.
+
+- **Presentation Layer**  
+  Student Portal, Staff Workspace, Admin Console
+
+- **Application Layer**  
+  Client Scripts, UI Actions, UI Policies, Business Rules
+
+- **Process Automation Layer**  
+  Flow Designer Workflows, SLAs, Notifications, Assignment Engine
+
+- **Database Layer**  
+  Custom tables for requests, tasks, profiles, logs
+
+- **Security Layer**  
+  Roles, ACLs, Access Policies, Audit Logs
+
+- **Analytics Layer**  
+  Dashboards, Reports, Metrics, KPIs
+
+- **Integration Layer**  
+  GitHub sync, REST APIs, External data connectors
+
+This architecture ensures performance, clarity, scalability, and AI-readiness for future enhancements such as predictive ticket routing and automated resolution suggestions.
