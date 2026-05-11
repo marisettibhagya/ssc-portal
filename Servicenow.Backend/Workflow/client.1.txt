@@ -1,0 +1,16 @@
+client
+
+(function() {
+	
+	var inputs = {};
+
+	inputs['current'] = { // GlideRecord 
+		table : '', 
+		sys_id :  
+	};
+	inputs['changed_fields'] = ; // Array.Object 
+	inputs['table_name'] = 'x_1755382_ssc_po_0_team_join_requests';
+
+	GlideFlow.startFlow('x_1755382_ssc_po_0.student_approval_notification', inputs)
+
+})();

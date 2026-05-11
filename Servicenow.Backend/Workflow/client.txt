@@ -1,0 +1,22 @@
+//server
+
+(function() {
+	
+	try {
+		var inputs = {};
+		inputs['current'] = ; // GlideRecord of table:  
+		inputs['changed_fields'] = ; // Array.Object 
+		inputs['table_name'] = 'x_1755382_ssc_po_0_team_join_requests';
+
+		// Start Asynchronously: Uncomment to run in background.
+		// sn_fd.FlowAPI.getRunner().flow('x_1755382_ssc_po_0.team_join_request_notification').inBackground().withInputs(inputs).run();
+				
+		// Execute Synchronously: Run in foreground.
+		sn_fd.FlowAPI.getRunner().flow('x_1755382_ssc_po_0.team_join_request_notification').inForeground().withInputs(inputs).run();
+		
+	} catch (ex) {
+		var message = ex.getMessage();
+		gs.error(message);
+	}
+	
+})();
