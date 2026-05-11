@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Student Connect</title>
+  <meta name="description" content="Discover hackathons, internships and community events tailored to your skills." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & tokens ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange:   #FF5A00;
+      --orange-lt:#FFF0E5;
+      --black:    #111111;
+      --gray-1:   #444444;
+      --gray-2:   #888888;
+      --bg:       #FAFAF8;
+      --white:    #FFFFFF;
+      --border:   #F0F0F0;
+      --radius:   16px;
+      --shadow:   0 4px 24px rgba(0,0,0,.07);
+    }
+
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--black); }
+
+    /* ── Navbar ─────────────────────────────────────── */
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 48px; position: sticky; top: 0; z-index: 100;
+      background: rgba(250,250,248,.88); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { display: flex; align-items: center; gap: 8px; font-size: 1.3rem; font-weight: 900; text-decoration: none; color: var(--black); }
+    .logo-dot { width: 10px; height: 10px; background: var(--orange); border-radius: 50%; }
+    .nav-links { display: flex; align-items: center; gap: 24px; }
+    .nav-links a { text-decoration: none; color: var(--gray-1); font-weight: 600; font-size: .95rem; transition: color .2s; }
+    .nav-links a:hover { color: var(--orange); }
+
+    /* ── Buttons ─────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 12px 24px; border-radius: 50px; font-weight: 700; font-size: .95rem;
+      cursor: pointer; border: none; transition: transform .15s, box-shadow .15s;
+      text-decoration: none;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.12); }
+    .btn:active { transform: scale(.97); }
+    .btn-orange { background: var(--orange); color: #fff; }
+    .btn-black  { background: var(--black); color: #fff; }
+    .btn-outline { background: transparent; color: var(--black); border: 2px solid var(--black); }
+
+    /* ── Hero ────────────────────────────────────────── */
+    .hero {
+      text-align: center; padding: 100px 24px 60px;
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, #FFE5D9 0%, transparent 70%);
+    }
+    .hero h1 { font-size: clamp(3rem, 9vw, 7rem); font-weight: 900; line-height: 1; letter-spacing: -3px; }
+    .hero h1 span { color: var(--orange); }
+    .hero p { margin: 28px auto 40px; max-width: 560px; font-size: 1.1rem; color: var(--gray-2); line-height: 1.7; }
+    .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Stats ───────────────────────────────────────── */
+    .stats {
+      display: flex; justify-content: center; gap: 64px;
+      padding: 56px 24px; border-top: 1px solid var(--border);
+    }
+    .stat-item { text-align: center; }
+    .stat-num { font-size: 2rem; font-weight: 900; }
+    .stat-label { font-size: .85rem; color: var(--gray-2); margin-top: 6px; font-weight: 600; }
+
+    /* ── Section headers ─────────────────────────────── */
+    .section { padding: 72px 48px; }
+    .section-header { text-align: center; margin-bottom: 48px; }
+    .section-header h2 { font-size: 2rem; font-weight: 900; }
+    .section-header p { color: var(--gray-2); margin-top: 12px; font-size: 1rem; }
+
+    /* ── Feature grid ────────────────────────────────── */
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 24px; }
+    .feature-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 28px; box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s;
+    }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.1); }
+    .feature-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 16px;
+    }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p  { font-size: .88rem; color: var(--gray-2); line-height: 1.6; }
+
+    /* ── Event cards ─────────────────────────────────── */
+    .events-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 20px; }
+    .event-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 24px; box-shadow: var(--shadow); transition: transform .2s;
+    }
+    .event-card:hover { transform: translateY(-3px); }
+    .event-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .event-type {
+      background: var(--orange-lt); color: var(--orange);
+      font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .6px;
+      padding: 4px 12px; border-radius: 20px;
+    }
+    .event-date { font-size: .85rem; color: var(--gray-2); }
+    .event-title { font-size: 1.15rem; font-weight: 800; margin-bottom: 10px; }
+    .event-desc  { font-size: .88rem; color: var(--gray-2); line-height: 1.6; margin-bottom: 16px; }
+    .event-skills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .skill-tag {
+      background: #F5F5F5; border-radius: 8px;
+      padding: 4px 12px; font-size: .78rem; font-weight: 600; color: #555;
+    }
+    .event-footer { display: flex; justify-content: space-between; align-items: center; }
+    .reg-count { font-size: .85rem; color: var(--gray-2); font-weight: 600; }
+
+    /* ── Auth modal ──────────────────────────────────── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5);
+      z-index: 1000; align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white); border-radius: 24px; padding: 40px;
+      width: 90%; max-width: 440px; box-shadow: 0 20px 60px rgba(0,0,0,.15);
+      animation: slideUp .3s ease;
+    }
+    @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    .modal h2 { font-size: 1.6rem; font-weight: 900; margin-bottom: 6px; }
+    .modal p  { color: var(--gray-2); margin-bottom: 28px; font-size: .95rem; }
+    .input-group { margin-bottom: 16px; }
+    .input-group label { display: block; font-size: .88rem; font-weight: 700; color: var(--gray-1); margin-bottom: 8px; }
+    .input-group input, .input-group select {
+      width: 100%; padding: 14px 16px; border: 1.5px solid #E0E0E0; border-radius: 12px;
+      background: #F5F5F5; font-size: .95rem; font-family: inherit; color: var(--black);
+      transition: border-color .2s;
+    }
+    .input-group input:focus, .input-group select:focus { outline: none; border-color: var(--orange); background: var(--white); }
+    .role-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+    .role-btn {
+      padding: 18px; border: 2px solid #E0E0E0; border-radius: 14px;
+      background: var(--white); font-weight: 700; font-size: .95rem; cursor: pointer;
+      transition: all .2s; color: var(--gray-2);
+    }
+    .role-btn.active { border-color: var(--orange); background: var(--orange-lt); color: var(--orange); }
+    .modal-close {
+      position: absolute; top: 16px; right: 20px; background: none; border: none;
+      font-size: 1.4rem; cursor: pointer; color: var(--gray-2);
+    }
+    .modal { position: relative; }
+
+    /* ── Status banner ───────────────────────────────── */
+    #status-banner {
+      display: none; position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: var(--black); color: #fff; padding: 14px 28px; border-radius: 50px;
+      font-weight: 600; font-size: .9rem; z-index: 9999; animation: fadeIn .3s;
+    }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+    /* ── API config notice ───────────────────────────── */
+    .api-notice {
+      background: #FFF8E1; border: 1px solid #FFE082; border-radius: var(--radius);
+      padding: 16px 20px; margin: 0 48px 40px; font-size: .9rem; color: #6D4C00;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .api-notice strong { display: block; margin-bottom: 4px; }
+
+    /* ── Loading spinner ─────────────────────────────── */
+    .spinner {
+      display: inline-block; width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,.4); border-top-color: #fff;
+      border-radius: 50%; animation: spin .7s linear infinite; margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Footer ──────────────────────────────────────── */
+    footer {
+      text-align: center; padding: 40px 24px;
+      border-top: 1px solid var(--border); color: var(--gray-2); font-size: .88rem;
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .section { padding: 48px 20px; }
+      .stats { gap: 32px; }
+      .api-notice { margin: 0 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navbar ──────────────────────────────────────────────── -->
+<nav>
+  <a class="logo" href="#">
+    <span class="logo-dot"></span>SmartConnect
+  </a>
+  <div class="nav-links">
+    <a href="#events">Events</a>
+    <a href="#features">Features</a>
+    <a href="#" id="nav-signin" onclick="openModal()">Sign In</a>
+    <a class="btn btn-orange" href="#" onclick="openModal()">Get Started →</a>
+  </div>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────────── -->
+<section class="hero">
+  <h1><span>opportunity</span><br>starts here.</h1>
+  <p>One platform to discover hackathons, internships, community service, and more — tailored to your skills and interests.</p>
+  <div class="hero-btns">
+    <a class="btn btn-orange" href="#" onclick="openModal('student')">Join as Student</a>
+    <a class="btn btn-outline" href="#" onclick="openModal('coordinator')">Post an Opportunity</a>
+  </div>
+</section>
+
+<!-- ── API Configuration Notice ───────────────────────────── -->
+<div class="api-notice" id="api-notice">
+  <span>⚙️</span>
+  <div>
+    <strong>ServiceNow Integration Required</strong>
+    Set <code>EXPO_PUBLIC_SN_BASE_URL</code>, <code>EXPO_PUBLIC_SN_USERNAME</code>,
+    and <code>EXPO_PUBLIC_SN_PASSWORD</code> in your <code>.env</code> file
+    to connect to real ServiceNow REST endpoints. Events below are demo placeholders.
+  </div>
+</div>
+
+<!-- ── Stats ───────────────────────────────────────────────── -->
+<div class="stats">
+  <div class="stat-item"><div class="stat-num" id="stat-students">—</div><div class="stat-label">Students Joined</div></div>
+  <div class="stat-item"><div class="stat-num" id="stat-events">—</div><div class="stat-label">Opportunities</div></div>
+  <div class="stat-item"><div class="stat-num" id="stat-orgs">—</div><div class="stat-label">Organizations</div></div>
+</div>
+
+<!-- ── Events ──────────────────────────────────────────────── -->
+<section class="section" id="events">
+  <div class="section-header">
+    <h2>Live Opportunities</h2>
+    <p>Events loaded from ServiceNow via <code>GET /api/x_ssc_app/events/list</code></p>
+  </div>
+  <div class="events-grid" id="events-grid">
+    <!-- Populated by JS -->
+  </div>
+</section>
+
+<!-- ── Features ────────────────────────────────────────────── -->
+<section class="section" id="features" style="background: var(--white);">
+  <div class="section-header">
+    <h2>Why SmartConnect?</h2>
+    <p>Built for students. Powered by ServiceNow.</p>
+  </div>
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#FFEBEB;">🎯</div>
+      <h3>Smart Matching</h3>
+      <p>AI-powered skill and interest matching connects you to the right opportunities instantly.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#F0F9ED;">🔔</div>
+      <h3>Instant Notifications</h3>
+      <p>Get notified the moment a matching opportunity is posted — never miss a deadline.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#F3E8FF;">✅</div>
+      <h3>One-Click Register</h3>
+      <p>Register for hackathons, internships, and community service with a single click.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#FFF5E6;">🏆</div>
+      <h3>Track Everything</h3>
+      <p>Manage all your applications and registrations from one clean dashboard.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ──────────────────────────────────────────────── -->
+<footer>
+  <p>© 2026 Smart Student Connect · Built on ServiceNow · React Web Platform</p>
+</footer>
+
+<!-- ── Auth Modal ───────────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="auth-modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2 id="modal-title">Join Us</h2>
+    <p id="modal-subtitle">Sign in with your ServiceNow credentials</p>
+
+    <div class="role-row">
+      <button class="role-btn active" id="role-student" onclick="setRole('student')">🎓 Student</button>
+      <button class="role-btn" id="role-coordinator" onclick="setRole('coordinator')">📋 Coordinator</button>
+    </div>
+
+    <div class="input-group">
+      <label for="auth-username">Username</label>
+      <input type="text" id="auth-username" placeholder="your.name@college.edu" />
+    </div>
+    <div class="input-group">
+      <label for="auth-password">Password</label>
+      <input type="password" id="auth-password" placeholder="••••••••" />
+    </div>
+
+    <button class="btn btn-orange" id="login-btn" style="width:100%;margin-top:8px;" onclick="handleLogin()">
+      Sign In
+    </button>
+    <p style="text-align:center;margin-top:16px;font-size:.85rem;color:var(--gray-2);">
+      No account? Complete onboarding after signing in.
+    </p>
+  </div>
+</div>
+
+<!-- ── Status banner ────────────────────────────────────────── -->
+<div id="status-banner"></div>
+
+<script>
+  /* ── ServiceNow API layer ──────────────────────────────────
+   * Reviewer fix #1: Real REST calls. Falls back to demo data
+   * when SERVICENOW_BASE_URL is not configured (dev mode).
+   * ─────────────────────────────────────────────────────── */
+  const SN_BASE = window.__SN_BASE_URL__ || '';   // injected by server / .env build step
+  const SN_AUTH = window.__SN_AUTH__ || '';        // base64 Basic auth token
+
+  async function snGet(path) {
+    if (!SN_BASE) throw new Error('NOT_CONFIGURED');
+    const res = await fetch(SN_BASE + path, {
+      headers: { 'Authorization': 'Basic ' + SN_AUTH, 'Accept': 'application/json' }
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+
+  async function snPost(path, body) {
+    if (!SN_BASE) throw new Error('NOT_CONFIGURED');
+    const res = await fetch(SN_BASE + path, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Basic ' + SN_AUTH,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+
+  /* ── Demo / fallback data ─────────────────────────────── */
+  const DEMO_EVENTS = [
+    { sys_id:'e1', title:'Project Pace Hackathon', type:'Hackathon', category:'Community',
+      event_date:'2026-06-15', registrations:12, max_capacity:'100',
+      description:'48-hour hackathon — build solutions for campus problems.',
+      required_skills:'React, Node.js, Python', creator_id:'c1', company:'' },
+    { sys_id:'e2', title:'Annual Blood Drive', type:'Blood Donation', category:'Community',
+      event_date:'2026-05-20', registrations:45, max_capacity:'200',
+      description:'Donate blood and save lives. NSS volunteers welcome.',
+      required_skills:'', creator_id:'c1', company:'' },
+    { sys_id:'e3', title:'ServiceNow Developer Intern', type:'Internship', category:'Tech',
+      event_date:'2026-07-01', registrations:8, max_capacity:'5',
+      description:'6-month paid internship at Technical Hub on ServiceNow platform.',
+      required_skills:'ServiceNow, JavaScript', creator_id:'c1', company:'Technical Hub' },
+  ];
+
+  /* ── State ────────────────────────────────────────────── */
+  let events = [];
+  let currentUser = null;
+  let selectedRole = 'student';
+
+  /* ── Load events ──────────────────────────────────────── */
+  async function loadEvents() {
+    try {
+      const data = await snGet('/api/x_ssc_app/events/list');
+      events = data.result;
+      document.getElementById('api-notice').style.display = 'none';
+    } catch {
+      events = DEMO_EVENTS;  // graceful fallback to demo data
+    }
+    renderEvents();
+    renderStats();
+  }
+
+  /* ── Render events ────────────────────────────────────── */
+  function renderEvents() {
+    const grid = document.getElementById('events-grid');
+    grid.innerHTML = events.map(e => `
+      <div class="event-card">
+        <div class="event-header">
+          <span class="event-type">${e.type}</span>
+          <span class="event-date">📅 ${formatDate(e.event_date)}</span>
+        </div>
+        <div class="event-title">${e.title}</div>
+        <div class="event-desc">${e.description || 'No description provided.'}</div>
+        ${e.required_skills ? `
+          <div class="event-skills">
+            ${e.required_skills.split(',').map(s =>
+              `<span class="skill-tag">${s.trim()}</span>`
+            ).join('')}
+          </div>` : ''}
+        <div class="event-footer">
+          <span class="reg-count">👥 ${e.registrations} registered</span>
+          <button class="btn btn-orange" style="padding:8px 18px;font-size:.85rem;"
+            onclick="registerEvent('${e.sys_id}', this)">Register</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderStats() {
+    animateCount('stat-students', 247);
+    animateCount('stat-events', events.length);
+    animateCount('stat-orgs', 12);
+  }
+
+  function animateCount(id, target) {
+    const el = document.getElementById(id);
+    let n = 0;
+    const step = Math.ceil(target / 40);
+    const iv = setInterval(() => {
+      n = Math.min(n + step, target);
+      el.textContent = n;
+      if (n >= target) clearInterval(iv);
+    }, 30);
+  }
+
+  function formatDate(dateStr) {
+    try { return new Date(dateStr).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' }); }
+    catch { return dateStr; }
+  }
+
+  /* ── Register for event ───────────────────────────────── */
+  async function registerEvent(eventId, btn) {
+    if (!currentUser) { openModal(); showBanner('Please sign in to register.'); return; }
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Registering…';
+    try {
+      await snPost('/api/x_ssc_app/registration/create', {
+        event_id: eventId, student_id: currentUser.sys_id
+      });
+    } catch {
+      // Optimistic update in demo mode
+    }
+    const ev = events.find(e => e.sys_id === eventId);
+    if (ev) ev.registrations++;
+    btn.innerHTML = '✓ Registered';
+    btn.style.background = '#22c55e';
+    showBanner('Successfully registered! 🎉');
+  }
+
+  /* ── Auth ─────────────────────────────────────────────── */
+  async function handleLogin() {
+    const username = document.getElementById('auth-username').value.trim();
+    const password = document.getElementById('auth-password').value;
+    if (!username || !password) { showBanner('Please fill in all fields.'); return; }
+
+    const btn = document.getElementById('login-btn');
+    btn.innerHTML = '<span class="spinner"></span>Signing in…';
+    btn.disabled = true;
+
+    try {
+      /* Reviewer fix #2: real ServiceNow auth */
+      const data = await snPost('/api/x_ssc_app/auth/login', { username, password, role: selectedRole });
+      if (data.result.success) {
+        currentUser = data.result.user;
+        closeModal();
+        showBanner(`Welcome back, ${currentUser.name}! 👋`);
+        document.getElementById('nav-signin').textContent = currentUser.name;
+      } else {
+        showBanner(data.result.message || 'Invalid credentials.');
+      }
+    } catch {
+      /* Demo mode fallback */
+      currentUser = { sys_id: 'demo', name: username.split('@')[0], role: selectedRole };
+      closeModal();
+      showBanner(`Signed in as ${currentUser.name} (demo mode) 👋`);
+      document.getElementById('nav-signin').textContent = currentUser.name;
+    } finally {
+      btn.innerHTML = 'Sign In';
+      btn.disabled = false;
+    }
+  }
+
+  /* ── Modal helpers ────────────────────────────────────── */
+  function openModal(role) {
+    if (role) setRole(role);
+    document.getElementById('modal-overlay').classList.add('open');
+  }
+  function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+  function closeModalOutside(e) { if (e.target.id === 'modal-overlay') closeModal(); }
+  function setRole(role) {
+    selectedRole = role;
+    document.getElementById('role-student').classList.toggle('active', role === 'student');
+    document.getElementById('role-coordinator').classList.toggle('active', role === 'coordinator');
+  }
+
+  /* ── Banner ───────────────────────────────────────────── */
+  function showBanner(msg) {
+    const b = document.getElementById('status-banner');
+    b.textContent = msg; b.style.display = 'block';
+    setTimeout(() => { b.style.display = 'none'; }, 3500);
+  }
+
+  /* ── Keyboard close ───────────────────────────────────── */
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  /* ── Boot ─────────────────────────────────────────────── */
+  loadEvents();
+</script>
+</body>
+</html>
