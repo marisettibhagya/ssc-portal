@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2026-05-11 09:41:58">
+<x_1755382_ssc_po_0_student_profile action="INSERT_OR_UPDATE">
+<active_status>true</active_status>
+<ai_recommendation_score>92</ai_recommendation_score>
+<department>cse</department>
+<email>rahulsharma2@gmail.com</email>
+<interests>AI, Hackathons</interests>
+<linkedin_url/>
+<phone_number>741852960</phone_number>
+<portfolio_url/>
+<profile_photo/>
+<resume/>
+<roll_number>CSE001</roll_number>
+<skills>Python, Java, ServiceNow</skills>
+<student_name>Rahul Sharma</student_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2026-05-11 09:22:35</sys_created_on>
+<sys_id>09cd1311477c831030f235ca116d4328</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2026-05-11 09:22:35</sys_updated_on>
+<year>3</year>
+</x_1755382_ssc_po_0_student_profile>
+</unload>

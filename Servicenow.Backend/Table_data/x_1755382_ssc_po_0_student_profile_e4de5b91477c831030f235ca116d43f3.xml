@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2026-05-11 09:44:27">
+<x_1755382_ssc_po_0_student_profile action="INSERT_OR_UPDATE">
+<active_status>true</active_status>
+<ai_recommendation_score>88</ai_recommendation_score>
+<department>ece</department>
+<email>arjun.kumar@example.com</email>
+<interests>Robotics, Technical Events</interests>
+<linkedin_url/>
+<phone_number>2147483647</phone_number>
+<portfolio_url/>
+<profile_photo/>
+<resume/>
+<roll_number>ECE003</roll_number>
+<skills>Embedded Systems, IoT</skills>
+<student_name>Arjun Kumar</student_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2026-05-11 09:26:44</sys_created_on>
+<sys_id>e4de5b91477c831030f235ca116d43f3</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2026-05-11 09:26:44</sys_updated_on>
+<year>4</year>
+</x_1755382_ssc_po_0_student_profile>
+</unload>

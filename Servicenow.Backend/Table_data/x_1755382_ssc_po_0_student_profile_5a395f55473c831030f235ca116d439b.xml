@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2026-05-11 09:44:11">
+<x_1755382_ssc_po_0_student_profile action="INSERT_OR_UPDATE">
+<active_status>false</active_status>
+<ai_recommendation_score/>
+<department>aiml</department>
+<email>sravanigraikapati@gmail.com</email>
+<interests>signing,throwball,running</interests>
+<linkedin_url/>
+<phone_number>2147483647</phone_number>
+<portfolio_url/>
+<profile_photo/>
+<resume/>
+<roll_number>852963</roll_number>
+<skills>sql,linux,python,c,c++</skills>
+<student_name>Sravani</student_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2026-05-11 09:02:01</sys_created_on>
+<sys_id>5a395f55473c831030f235ca116d439b</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2026-05-11 09:02:01</sys_updated_on>
+<year>3</year>
+</x_1755382_ssc_po_0_student_profile>
+</unload>
