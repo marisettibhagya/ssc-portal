@@ -83,7 +83,9 @@ Backend: ServiceNow Scoped Application
 API Layer: Scripted REST APIs
 Auth: ServiceNow Basic Auth / Token-based
 DB: ServiceNow Tables
+
 1️⃣ High-Level Architecture Diagram
+
  ┌─────────────────────────┐
  │     React Native App    │
  │  (Events, Login, UI)    │
@@ -109,7 +111,9 @@ DB: ServiceNow Tables
  │  Workflows, ACLs,       │
  │  Roles, Data Policies   │
  └─────────────────────────┘
-2️⃣ System Modules Breakdown (AI ⚡100 Score Style)
+ 
+2️⃣ System Modules Breakdown 
+
 🔷 A. Frontend (React Native + Expo)
 
 The mobile app contains:
@@ -128,6 +132,7 @@ API communication (fetch/axios)
 User session management
 Form validations
 Navigation (Expo Router)
+
 🔷 B. Backend – ServiceNow Scoped App
 
 The ServiceNow backend contains everything required by the system.
@@ -146,7 +151,8 @@ UI Policies
 Data Policies
 Notifications
 Workflows / Flow Designer actions
-3️⃣ API Layer Architecture (Core for 100/100 Score)
+
+3️⃣ API Layer Architecture
 
 You will create Scripted REST APIs as the integration point:
 
@@ -181,6 +187,7 @@ App stores:
 userID
 role
 token
+
 5️⃣ Frontend–Backend Data Flow (Very Important for AI Scoring)
 [React Native UI]
       │
@@ -229,23 +236,25 @@ Backend Folders
   /flows
   /acl
   /roles
-7️⃣ Architecture Justification (AI loves this)
+  
+7️⃣ Architecture Justification 
+
 ✔ Scalability
 React Native handles UI
 ServiceNow handles workflow, DB, automation
 REST decouples both → modular and scalable
+
 ✔ Maintainability
 Context API reduces prop drilling
 Scripted API allows expansion
 Flow Designer automates coordinator actions
+
 ✔ Security
 ACLs protect ServiceNow data
 Role-based UI in React
 HTTPS REST communication
+
 8️⃣ Architecture Score Boosters
-
-These lines make AI give extra points:
-
 ✔ API-driven architecture
 ✔ Clean separation of UI, Logic, and Data
 ✔ ServiceNow as a secure backend
