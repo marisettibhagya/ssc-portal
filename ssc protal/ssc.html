@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartConnect — Opportunity starts here.</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #E8500A;
+    --orange-light: #FF6B2B;
+    --black: #0D0D0D;
+    --cream: #F5F0E8;
+    --white: #FFFFFF;
+    --gray: #6B6B6B;
+    --light-gray: #E8E4DC;
+    --success: #1A7A4A;
+    --card-bg: #FFFFFF;
+    --input-bg: #F9F6F1;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--black); min-height: 100vh; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; width: 100%; background: rgba(245,240,232,0.95); backdrop-filter: blur(8px); z-index: 100; padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 64px; border-bottom: 1px solid rgba(0,0,0,0.07); }
+  .logo { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+  .logo-dot { width: 10px; height: 10px; background: var(--orange); border-radius: 50%; }
+  .nav-btns { display: flex; gap: 12px; align-items: center; }
+  .btn-outline { padding: 8px 20px; border: 1.5px solid var(--black); background: transparent; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-outline:hover { background: var(--black); color: var(--white); }
+  .btn-primary { padding: 9px 22px; background: var(--black); color: var(--white); border: none; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+  .btn-primary:hover { background: var(--orange); }
+
+  /* PAGES */
+  .page { display: none; min-height: 100vh; padding-top: 64px; }
+  .page.active { display: block; }
+
+  /* HOME */
+  #home { background: var(--cream); overflow: hidden; }
+  .hero { padding: 120px 5% 80px; position: relative; }
+  .hero-blob { position: absolute; top: 0; right: 0; width: 420px; height: 420px; background: rgba(232,80,10,0.08); border-radius: 50%; filter: blur(60px); pointer-events: none; }
+  .hero-blob2 { position: absolute; bottom: -100px; right: 15%; width: 300px; height: 300px; background: rgba(200,230,200,0.2); border-radius: 50%; filter: blur(50px); pointer-events: none; }
+  .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(3.5rem,8vw,6rem); font-weight: 800; line-height: 1.0; max-width: 800px; }
+  .hero h1 .accent { color: var(--orange); }
+  .hero p { margin-top: 24px; font-size: 1.15rem; color: var(--gray); max-width: 480px; line-height: 1.65; }
+  .hero-cta { margin-top: 40px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-hero { padding: 14px 34px; background: var(--orange); color: var(--white); border: none; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .btn-hero:hover { background: #c44008; transform: translateY(-1px); }
+  .btn-hero-outline { padding: 13px 34px; background: transparent; color: var(--black); border: 1.5px solid var(--black); border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-hero-outline:hover { background: var(--black); color: var(--white); }
+
+  .stats { display: flex; gap: 60px; padding: 40px 5%; border-top: 1px solid var(--light-gray); flex-wrap: wrap; }
+  .stat { }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; }
+  .stat-label { font-size: 0.9rem; color: var(--gray); margin-top: 2px; }
+
+  .features { padding: 80px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 24px; }
+  .feature-card { background: var(--white); border-radius: 20px; padding: 28px; border: 1px solid var(--light-gray); transition: box-shadow 0.2s; }
+  .feature-card:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.08); }
+  .feature-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 16px; }
+  .feature-card h3 { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+  .feature-card p { font-size: 0.9rem; color: var(--gray); line-height: 1.6; }
+
+  /* MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 500; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--white); border-radius: 24px; padding: 40px; width: 100%; max-width: 460px; position: relative; max-height: 90vh; overflow-y: auto; }
+  .modal-close { position: absolute; top: 16px; right: 18px; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--gray); line-height: 1; }
+  .modal h2 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; }
+  .modal .sub { font-size: 0.9rem; color: var(--gray); margin-bottom: 28px; }
+  .form-group { margin-bottom: 18px; }
+  .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #444; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 14px; border: 1.5px solid var(--light-gray); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; background: var(--input-bg); transition: border-color 0.2s; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--orange); }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .btn-form { width: 100%; padding: 14px; background: var(--orange); color: var(--white); border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 8px; transition: background 0.2s; }
+  .btn-form:hover { background: #c44008; }
+  .modal-switch { text-align: center; font-size: 0.88rem; color: var(--gray); margin-top: 16px; }
+  .modal-switch a { color: var(--orange); font-weight: 600; cursor: pointer; text-decoration: none; }
+  .tag-input-area { border: 1.5px solid var(--light-gray); border-radius: 12px; padding: 10px 12px; background: var(--input-bg); display: flex; flex-wrap: wrap; gap: 6px; min-height: 48px; cursor: text; }
+  .tag-input-area input { border: none; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; outline: none; flex: 1; min-width: 80px; }
+  .tag { background: #FFE8DC; color: var(--orange); border-radius: 100px; padding: 3px 10px; font-size: 0.82rem; font-weight: 600; display: flex; align-items: center; gap: 5px; }
+  .tag .rm { cursor: pointer; font-size: 1rem; line-height: 1; }
+  .steps-bar { display: flex; gap: 6px; margin-bottom: 28px; }
+  .step-dot { flex: 1; height: 4px; border-radius: 4px; background: var(--light-gray); }
+  .step-dot.done { background: var(--orange); }
+  .file-upload { border: 2px dashed var(--light-gray); border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; background: var(--input-bg); transition: border-color 0.2s; }
+  .file-upload:hover { border-color: var(--orange); }
+  .file-upload p { font-size: 0.9rem; color: var(--gray); margin-top: 8px; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); margin-bottom: 4px; }
+
+  /* DASHBOARDS */
+  #student-dashboard, #organizer-dashboard { background: #F5F0E8; }
+  .dash-layout { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 64px); }
+  .sidebar { background: var(--white); border-right: 1px solid var(--light-gray); padding: 28px 0; }
+  .sidebar-user { padding: 0 20px 24px; border-bottom: 1px solid var(--light-gray); }
+  .avatar { width: 44px; height: 44px; background: linear-gradient(135deg,#FF6B2B,#E8500A); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1rem; margin-bottom: 8px; }
+  .sidebar-user .name { font-weight: 600; font-size: 0.95rem; }
+  .sidebar-user .role-badge { font-size: 0.78rem; color: var(--orange); font-weight: 600; margin-top: 2px; }
+  .nav-link { display: flex; align-items: center; gap: 10px; padding: 11px 20px; font-size: 0.9rem; font-weight: 500; color: var(--gray); cursor: pointer; transition: all 0.15s; border-left: 3px solid transparent; }
+  .nav-link:hover, .nav-link.active { background: #FFF6F2; color: var(--orange); border-left-color: var(--orange); }
+  .nav-link svg { width: 18px; height: 18px; opacity: 0.7; }
+  .nav-link:hover svg, .nav-link.active svg { opacity: 1; }
+  .sidebar-section { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #B0A898; padding: 20px 20px 8px; font-weight: 600; }
+  .dash-main { padding: 32px 36px; overflow-y: auto; }
+  .dash-header { margin-bottom: 28px; }
+  .dash-header h1 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; }
+  .dash-header p { color: var(--gray); font-size: 0.95rem; margin-top: 4px; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: 16px; margin-bottom: 28px; }
+  .kpi-card { background: var(--white); border-radius: 16px; padding: 20px; border: 1px solid var(--light-gray); }
+  .kpi-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; }
+  .kpi-label { font-size: 0.82rem; color: var(--gray); margin-top: 4px; }
+  .kpi-delta { font-size: 0.8rem; font-weight: 600; margin-top: 8px; }
+  .kpi-delta.up { color: var(--success); }
+  .section-card { background: var(--white); border-radius: 20px; padding: 24px; border: 1px solid var(--light-gray); margin-bottom: 24px; }
+  .section-card h2 { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 16px; }
+  .opportunity-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid #F0EBE3; }
+  .opportunity-item:last-child { border-bottom: none; }
+  .opp-icon { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+  .opp-info { flex: 1; }
+  .opp-info h4 { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
+  .opp-info p { font-size: 0.83rem; color: var(--gray); }
+  .opp-match { font-size: 0.82rem; font-weight: 700; color: var(--success); background: #EAF7F0; padding: 3px 10px; border-radius: 100px; white-space: nowrap; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 100px; font-size: 0.78rem; font-weight: 600; }
+  .badge-orange { background: #FFE8DC; color: var(--orange); }
+  .badge-blue { background: #E6F0FF; color: #2563EB; }
+  .badge-green { background: #EAF7F0; color: #1A7A4A; }
+  .badge-purple { background: #F0EAFF; color: #7C3AED; }
+  .skill-bar-row { margin-bottom: 14px; }
+  .skill-bar-row .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+  .skill-bar-row .label { font-size: 0.88rem; font-weight: 500; }
+  .skill-bar-row .pct { font-size: 0.82rem; color: var(--gray); }
+  .bar-bg { height: 8px; background: var(--light-gray); border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; background: var(--orange); }
+  /* Organizer */
+  .event-row { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid #F0EBE3; }
+  .event-row:last-child { border-bottom: none; }
+  .event-row .info { flex: 1; }
+  .event-row .info h4 { font-weight: 600; font-size: 0.95rem; }
+  .event-row .info p { font-size: 0.83rem; color: var(--gray); margin-top: 2px; }
+  .event-num { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; }
+  .student-list-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #F0EBE3; }
+  .student-list-item:last-child { border-bottom: none; }
+  .stu-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg,#FF6B2B,#E8500A); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.82rem; flex-shrink: 0; }
+  .stu-info { flex: 1; }
+  .stu-info h4 { font-weight: 500; font-size: 0.9rem; }
+  .stu-info p { font-size: 0.8rem; color: var(--gray); }
+  .progress-ring { width: 80px; height: 80px; }
+  .dash-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 900px) { .dash-layout { grid-template-columns: 1fr; } .sidebar { display: none; } .dash-grid2 { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .hero h1 { font-size: 3rem; } .features { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="showPage('home')"><div class="logo-dot"></div>SmartConnect</div>
+  <div class="nav-btns" id="nav-btns">
+    <button class="btn-outline" onclick="openModal('signin')">Sign In</button>
+    <button class="btn-primary" onclick="openModal('role-choose')">Get Started →</button>
+  </div>
+</nav>
+
+<!-- =================== HOME =================== -->
+<div id="home" class="page active">
+  <div class="hero">
+    <div class="hero-blob"></div>
+    <div class="hero-blob2"></div>
+    <h1><span class="accent">opportunity</span><br>starts here.</h1>
+    <p>One platform to discover hackathons, internships, community service, and more — tailored to your skills and interests.</p>
+    <div class="hero-cta">
+      <button class="btn-hero" onclick="openModal('student-signup')">Join as Student</button>
+      <button class="btn-hero-outline" onclick="openModal('organizer-signup')">Post an Opportunity</button>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="cnt-students">0</div><div class="stat-label">Students Joined</div></div>
+    <div class="stat"><div class="stat-num" id="cnt-opp">0</div><div class="stat-label">Opportunities</div></div>
+    <div class="stat"><div class="stat-num" id="cnt-orgs">0</div><div class="stat-label">Organizations</div></div>
+  </div>
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#FFE8DC;">🎯</div>
+      <h3>Smart Matching</h3>
+      <p>AI-powered skill and interest matching connects you to the right opportunities instantly.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#E6F0FF;">🔔</div>
+      <h3>Instant Notifications</h3>
+      <p>Get notified the moment a matching opportunity is posted — never miss a deadline.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#EAF7F0;">📋</div>
+      <h3>One-Click Register</h3>
+      <p>Register for hackathons, internships, and community service with a single click.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#F0EAFF;">📊</div>
+      <h3>Track Everything</h3>
+      <p>Manage all your applications and registrations from one clean dashboard.</p>
+    </div>
+  </div>
+</div>
+
+<!-- =================== STUDENT DASHBOARD =================== -->
+<div id="student-dashboard" class="page">
+  <div class="dash-layout">
+    <div class="sidebar">
+      <div class="sidebar-user">
+        <div class="avatar" id="stu-avatar">JS</div>
+        <div class="name" id="stu-sidebar-name">John Student</div>
+        <div class="role-badge">Student • CSE</div>
+      </div>
+      <div style="padding-top:12px">
+        <div class="sidebar-section">Main</div>
+        <div class="nav-link active" onclick="setTab('stu','overview')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Overview
+        </div>
+        <div class="nav-link" onclick="setTab('stu','matches')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg> Matched Opportunities
+        </div>
+        <div class="nav-link" onclick="setTab('stu','applied')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg> My Applications
+        </div>
+        <div class="nav-link" onclick="setTab('stu','skills')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg> Skill Analysis
+        </div>
+        <div class="sidebar-section">Account</div>
+        <div class="nav-link" onclick="setTab('stu','profile')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profile
+        </div>
+        <div class="nav-link" onclick="logout()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Logout
+        </div>
+      </div>
+    </div>
+    <div class="dash-main" id="stu-content">
+      <!-- content injected by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- =================== ORGANIZER DASHBOARD =================== -->
+<div id="organizer-dashboard" class="page">
+  <div class="dash-layout">
+    <div class="sidebar">
+      <div class="sidebar-user">
+        <div class="avatar" style="background:linear-gradient(135deg,#2563EB,#1e40af);" id="org-avatar">OA</div>
+        <div class="name" id="org-sidebar-name">Org Admin</div>
+        <div class="role-badge" style="color:#2563EB;">Organizer</div>
+      </div>
+      <div style="padding-top:12px">
+        <div class="sidebar-section">Main</div>
+        <div class="nav-link active" onclick="setTab('org','overview')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Dashboard
+        </div>
+        <div class="nav-link" onclick="setTab('org','events')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> My Events
+        </div>
+        <div class="nav-link" onclick="setTab('org','students')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Registered Students
+        </div>
+        <div class="nav-link" onclick="setTab('org','post')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg> Post New Event
+        </div>
+        <div class="sidebar-section">Account</div>
+        <div class="nav-link" onclick="logout()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Logout
+        </div>
+      </div>
+    </div>
+    <div class="dash-main" id="org-content"></div>
+  </div>
+</div>
+
+<!-- =================== MODALS =================== -->
+
+<!-- SIGN IN -->
+<div class="modal-overlay" id="modal-signin">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('signin')">✕</button>
+    <h2>Welcome back 👋</h2>
+    <p class="sub">Sign in to your SmartConnect account</p>
+    <div class="form-group"><label>Email Address</label><input type="email" id="si-email" placeholder="you@example.com"></div>
+    <div class="form-group"><label>Password</label><input type="password" id="si-pass" placeholder="••••••••"></div>
+    <button class="btn-form" onclick="handleSignIn()">Sign In</button>
+    <p class="modal-switch">Don't have an account? <a onclick="switchModal('signin','role-choose')">Sign up</a></p>
+  </div>
+</div>
+
+<!-- ROLE CHOOSE -->
+<div class="modal-overlay" id="modal-role-choose">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('role-choose')">✕</button>
+    <h2>Join SmartConnect</h2>
+    <p class="sub">Choose how you'd like to get started</p>
+    <div style="display:grid;gap:14px;margin-top:10px">
+      <button style="padding:20px;border:1.5px solid #E8E4DC;border-radius:16px;background:#FFF6F2;text-align:left;cursor:pointer;transition:all 0.2s;display:flex;gap:14px;align-items:center" onmouseenter="this.style.borderColor='#E8500A'" onmouseleave="this.style.borderColor='#E8E4DC'" onclick="switchModal('role-choose','student-signup')">
+        <span style="font-size:1.8rem">🎓</span>
+        <div><div style="font-weight:700;font-size:1rem;font-family:Syne,sans-serif">I'm a Student</div><div style="font-size:0.85rem;color:#6B6B6B;margin-top:3px">Discover hackathons, internships & more</div></div>
+      </button>
+      <button style="padding:20px;border:1.5px solid #E8E4DC;border-radius:16px;background:#EFF4FF;text-align:left;cursor:pointer;transition:all 0.2s;display:flex;gap:14px;align-items:center" onmouseenter="this.style.borderColor='#2563EB'" onmouseleave="this.style.borderColor='#E8E4DC'" onclick="switchModal('role-choose','organizer-signup')">
+        <span style="font-size:1.8rem">🏢</span>
+        <div><div style="font-weight:700;font-size:1rem;font-family:Syne,sans-serif">I'm an Organizer</div><div style="font-size:0.85rem;color:#6B6B6B;margin-top:3px">Post events, manage registrations</div></div>
+      </button>
+    </div>
+    <p class="modal-switch" style="margin-top:20px">Already have an account? <a onclick="switchModal('role-choose','signin')">Sign in</a></p>
+  </div>
+</div>
+
+<!-- STUDENT SIGNUP -->
+<div class="modal-overlay" id="modal-student-signup">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('student-signup')">✕</button>
+    <div class="steps-bar">
+      <div class="step-dot done" id="stu-s1"></div>
+      <div class="step-dot" id="stu-s2"></div>
+      <div class="step-dot" id="stu-s3"></div>
+    </div>
+    <div id="stu-step-1">
+      <h2>Create your account</h2>
+      <p class="sub">Step 1 of 3 — Basic info</p>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input id="stu-fname" placeholder="John"></div>
+        <div class="form-group"><label>Last Name</label><input id="stu-lname" placeholder="Doe"></div>
+      </div>
+      <div class="form-group"><label>Email Address</label><input id="stu-email" type="email" placeholder="john@college.edu"></div>
+      <div class="form-group"><label>Phone Number</label><input id="stu-phone" type="tel" placeholder="+91 9999999999"></div>
+      <div class="form-group"><label>Password</label><input id="stu-pass" type="password" placeholder="••••••••"></div>
+      <button class="btn-form" onclick="stuNext(1)">Continue →</button>
+      <p class="modal-switch">Already have an account? <a onclick="switchModal('student-signup','signin')">Sign in</a></p>
+    </div>
+    <div id="stu-step-2" style="display:none">
+      <h2>Academic details</h2>
+      <p class="sub">Step 2 of 3 — Education & skills</p>
+      <div class="form-group"><label>College / University</label><input id="stu-college" placeholder="e.g. IIT Madras"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Branch</label><input id="stu-branch" placeholder="CSE / ECE..."></div>
+        <div class="form-group"><label>Year</label><select id="stu-year"><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select></div>
+      </div>
+      <div class="form-group">
+        <label>Skills <span style="font-size:0.78rem;color:#6B6B6B">(press Enter to add)</span></label>
+        <div class="tag-input-area" onclick="this.querySelector('input').focus()" id="skills-area">
+          <input id="skill-input" placeholder="e.g. Python, React..." onkeydown="addTag(event,'skills-area','skill-input','skills-list')">
+        </div>
+        <div id="skills-list" style="display:none"></div>
+      </div>
+      <div class="form-group">
+        <label>Interests <span style="font-size:0.78rem;color:#6B6B6B">(press Enter to add)</span></label>
+        <div class="tag-input-area" onclick="this.querySelector('input').focus()" id="interests-area">
+          <input id="interest-input" placeholder="e.g. AI, Web Dev, Data Science..." onkeydown="addTag(event,'interests-area','interest-input','interests-list')">
+        </div>
+        <div id="interests-list" style="display:none"></div>
+      </div>
+      <button class="btn-form" onclick="stuNext(2)">Continue →</button>
+    </div>
+    <div id="stu-step-3" style="display:none">
+      <h2>Almost done!</h2>
+      <p class="sub">Step 3 of 3 — Upload your resume</p>
+      <div class="file-upload" onclick="document.getElementById('resume-file').click()">
+        <div style="font-size:2rem">📄</div>
+        <p><strong>Click to upload</strong> your resume</p>
+        <p>PDF or DOCX, max 5MB</p>
+        <input type="file" id="resume-file" accept=".pdf,.docx" style="display:none" onchange="setFileName(this)">
+        <p id="file-name" style="font-size:0.85rem;color:#E8500A;margin-top:8px;font-weight:600"></p>
+      </div>
+      <div class="form-group" style="margin-top:20px"><label>LinkedIn Profile (optional)</label><input id="stu-linkedin" placeholder="linkedin.com/in/yourname"></div>
+      <button class="btn-form" onclick="completeStudentSignup()">Complete Profile 🎉</button>
+    </div>
+  </div>
+</div>
+
+<!-- ORGANIZER SIGNUP -->
+<div class="modal-overlay" id="modal-organizer-signup">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('organizer-signup')">✕</button>
+    <div class="steps-bar">
+      <div class="step-dot done" id="org-s1"></div>
+      <div class="step-dot" id="org-s2"></div>
+    </div>
+    <div id="org-step-1">
+      <h2>Create organizer account</h2>
+      <p class="sub">Step 1 of 2 — Organization details</p>
+      <div class="form-group"><label>Organization Name</label><input id="org-name" placeholder="e.g. Google, IIT Bombay CSI"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Contact Name</label><input id="org-contact" placeholder="Your name"></div>
+        <div class="form-group"><label>Designation</label><input id="org-desig" placeholder="e.g. Event Head"></div>
+      </div>
+      <div class="form-group"><label>Official Email</label><input id="org-email" type="email" placeholder="events@org.com"></div>
+      <div class="form-group"><label>Password</label><input id="org-pass" type="password" placeholder="••••••••"></div>
+      <button class="btn-form" onclick="orgNext(1)">Continue →</button>
+    </div>
+    <div id="org-step-2" style="display:none">
+      <h2>Post your first event</h2>
+      <p class="sub">Step 2 of 2 — Event details</p>
+      <div class="form-group"><label>Event Name</label><input id="ev-name" placeholder="e.g. HackFest 2026"></div>
+      <div class="form-group">
+        <label>Type of Event</label>
+        <select id="ev-type">
+          <option value="">Select type...</option>
+          <option>Hackathon</option>
+          <option>Internship</option>
+          <option>Community Service</option>
+          <option>Workshop</option>
+          <option>Competition</option>
+          <option>Conference</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Registration Deadline</label><input id="ev-deadline" type="date"></div>
+        <div class="form-group"><label>Event Date</label><input id="ev-date" type="date"></div>
+      </div>
+      <div class="form-group"><label>Description</label><textarea id="ev-desc" placeholder="Tell students what this event is about, what skills they'll gain..."></textarea></div>
+      <div class="form-group">
+        <label>Skills Required <span style="font-size:0.78rem;color:#6B6B6B">(press Enter)</span></label>
+        <div class="tag-input-area" onclick="this.querySelector('input').focus()" id="ev-skills-area">
+          <input id="ev-skill-input" placeholder="e.g. Python, ML..." onkeydown="addTag(event,'ev-skills-area','ev-skill-input','ev-skills-list')">
+        </div>
+        <div id="ev-skills-list" style="display:none"></div>
+      </div>
+      <button class="btn-form" onclick="completeOrgSignup()">Launch Dashboard 🚀</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---- State ----
+let currentStudentUser = null, currentOrgUser = null;
+let stuTags = [], interestTags = [], evSkillTags = [];
+let stuCurrentStep = 1, orgCurrentStep = 1;
+
+// ---- Page nav ----
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function logout() { showPage('home'); renderNavLoggedOut(); }
+function renderNavLoggedOut() {
+  document.getElementById('nav-btns').innerHTML = `<button class="btn-outline" onclick="openModal('signin')">Sign In</button><button class="btn-primary" onclick="openModal('role-choose')">Get Started →</button>`;
+}
+
+// ---- Modals ----
+function openModal(id) { document.getElementById('modal-'+id).classList.add('open'); }
+function closeModal(id) { document.getElementById('modal-'+id).classList.remove('open'); }
+function switchModal(from, to) { closeModal(from); openModal(to); }
+
+// ---- Tag inputs ----
+function addTag(e, areaId, inputId, listId) {
+  if (e.key !== 'Enter') return;
+  const val = document.getElementById(inputId).value.trim();
+  if (!val) return;
+  const arr = areaId === 'skills-area' ? stuTags : (areaId === 'interests-area' ? interestTags : evSkillTags);
+  if (arr.includes(val)) { document.getElementById(inputId).value=''; return; }
+  arr.push(val);
+  const tag = document.createElement('div');
+  tag.className = 'tag';
+  tag.innerHTML = `${val} <span class="rm" onclick="removeTag(this,'${areaId}','${val}')">×</span>`;
+  document.getElementById(areaId).insertBefore(tag, document.getElementById(inputId));
+  document.getElementById(inputId).value = '';
+  e.preventDefault();
+}
+function removeTag(el, areaId, val) {
+  el.parentElement.remove();
+  const arr = areaId === 'skills-area' ? stuTags : (areaId === 'interests-area' ? interestTags : evSkillTags);
+  const i = arr.indexOf(val); if(i>-1) arr.splice(i,1);
+}
+function setFileName(inp) { document.getElementById('file-name').textContent = inp.files[0]?.name || ''; }
+
+// ---- Student signup flow ----
+function stuNext(step) {
+  if (step === 1) {
+    const email = document.getElementById('stu-email').value.trim();
+    const fname = document.getElementById('stu-fname').value.trim();
+    if (!fname || !email) { alert('Please fill in all required fields.'); return; }
+    document.getElementById('stu-step-1').style.display = 'none';
+    document.getElementById('stu-step-2').style.display = 'block';
+    document.getElementById('stu-s2').classList.add('done');
+    stuCurrentStep = 2;
+  } else if (step === 2) {
+    if (stuTags.length === 0) { alert('Please add at least one skill.'); return; }
+    document.getElementById('stu-step-2').style.display = 'none';
+    document.getElementById('stu-step-3').style.display = 'block';
+    document.getElementById('stu-s3').classList.add('done');
+    stuCurrentStep = 3;
+  }
+}
+
+function completeStudentSignup() {
+  const fname = document.getElementById('stu-fname').value.trim() || 'Student';
+  const lname = document.getElementById('stu-lname').value.trim() || '';
+  const branch = document.getElementById('stu-branch').value.trim() || 'CSE';
+  const college = document.getElementById('stu-college').value.trim() || 'Your College';
+  const year = document.getElementById('stu-year').value;
+  currentStudentUser = { name: fname+' '+lname, branch, college, year, skills: [...stuTags], interests: [...interestTags] };
+  
+  // Update UI
+  const initials = (fname[0]||'S') + (lname[0]||'T');
+  document.getElementById('stu-avatar').textContent = initials.toUpperCase();
+  document.getElementById('stu-sidebar-name').textContent = currentStudentUser.name;
+  document.querySelector('#student-dashboard .role-badge').textContent = `Student • ${branch}`;
+  
+  closeModal('student-signup');
+  document.getElementById('nav-btns').innerHTML = `<div style="display:flex;align-items:center;gap:10px"><div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#FF6B2B,#E8500A);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:0.82rem">${initials.toUpperCase()}</div><span style="font-size:0.9rem;font-weight:500">${fname}</span></div>`;
+  
+  renderStudentDashboard('overview');
+  showPage('student-dashboard');
+}
+
+// ---- Organizer signup flow ----
+function orgNext(step) {
+  if (step === 1) {
+    const name = document.getElementById('org-name').value.trim();
+    const email = document.getElementById('org-email').value.trim();
+    if (!name || !email) { alert('Please fill in all fields.'); return; }
+    document.getElementById('org-step-1').style.display = 'none';
+    document.getElementById('org-step-2').style.display = 'block';
+    document.getElementById('org-s2').classList.add('done');
+    orgCurrentStep = 2;
+  }
+}
+
+function completeOrgSignup() {
+  const name = document.getElementById('org-name').value.trim() || 'Organization';
+  const evName = document.getElementById('ev-name').value.trim();
+  const evType = document.getElementById('ev-type').value;
+  if (!evName || !evType) { alert('Please fill in event details.'); return; }
+  const contact = document.getElementById('org-contact').value.trim() || 'Admin';
+  currentOrgUser = { name, contact, events: [{ name: evName, type: evType, deadline: document.getElementById('ev-deadline').value, date: document.getElementById('ev-date').value, skills: [...evSkillTags], students: [] }] };
+  
+  const initials = name.slice(0,2).toUpperCase();
+  document.getElementById('org-avatar').textContent = initials;
+  document.getElementById('org-sidebar-name').textContent = name;
+  
+  closeModal('organizer-signup');
+  document.getElementById('nav-btns').innerHTML = `<div style="display:flex;align-items:center;gap:10px"><div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#2563EB,#1e40af);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:0.82rem">${initials}</div><span style="font-size:0.9rem;font-weight:500">${name}</span></div>`;
+  
+  renderOrgDashboard('overview');
+  showPage('organizer-dashboard');
+}
+
+// ---- Sign in ----
+function handleSignIn() {
+  const email = document.getElementById('si-email').value.trim();
+  if (!email) { alert('Please enter your email.'); return; }
+  // Demo: detect role by email pattern
+  if (email.includes('org') || email.includes('admin') || email.includes('company')) {
+    currentOrgUser = { name: 'TechOrg Inc', contact: 'Admin', events: demoEvents() };
+    document.getElementById('org-avatar').textContent = 'TO';
+    document.getElementById('org-sidebar-name').textContent = 'TechOrg Inc';
+    closeModal('signin');
+    renderOrgDashboard('overview');
+    showPage('organizer-dashboard');
+  } else {
+    currentStudentUser = { name: 'Alex Johnson', branch: 'CSE', college: 'IIT Madras', year: '3rd Year', skills: ['Python','React','ML','SQL'], interests: ['AI','Web Dev','Open Source'] };
+    document.getElementById('stu-avatar').textContent = 'AJ';
+    document.getElementById('stu-sidebar-name').textContent = 'Alex Johnson';
+    closeModal('signin');
+    renderStudentDashboard('overview');
+    showPage('student-dashboard');
+  }
+}
+
+// ---- Demo data ----
+function demoOpportunities() {
+  return [
+    { title:'Google Summer of Code 2026', org:'Google', type:'Internship', match:96, skills:['Python','Open Source'], icon:'💼', color:'#E6F0FF' },
+    { title:'HackFest National 2026', org:'ACM IIT Delhi', type:'Hackathon', match:91, skills:['React','Node.js'], icon:'⚡', color:'#FFE8DC' },
+    { title:'Microsoft ML Challenge', org:'Microsoft', type:'Competition', match:87, skills:['Python','ML'], icon:'🤖', color:'#EAF7F0' },
+    { title:'Community Code Drive', org:'Mozilla Foundation', type:'Community', match:78, skills:['JavaScript','Git'], icon:'🌍', color:'#F0EAFF' },
+    { title:'Smart India Hackathon', org:'Govt. of India', type:'Hackathon', match:73, skills:['Any Stack'], icon:'🇮🇳', color:'#FFF3E0' },
+  ];
+}
+function demoEvents() {
+  return [
+    { name:'HackFest 2026', type:'Hackathon', deadline:'2026-05-20', date:'2026-06-01', skills:['Python','React'], students: demoStudents() },
+    { name:'ML Workshop', type:'Workshop', deadline:'2026-05-25', date:'2026-06-10', skills:['Python','ML'], students: demoStudents().slice(0,2) },
+    { name:'Web Dev Bootcamp', type:'Workshop', deadline:'2026-06-01', date:'2026-06-15', skills:['HTML','CSS','JS'], students: [demoStudents()[0]] },
+  ];
+}
+function demoStudents() {
+  return [
+    { name:'Arjun Mehta', branch:'CSE', year:'3rd', skills:['Python','React'], initials:'AM' },
+    { name:'Priya Sharma', branch:'ECE', year:'2nd', skills:['ML','TensorFlow'], initials:'PS' },
+    { name:'Rohan Das', branch:'IT', year:'4th', skills:['Node.js','MongoDB'], initials:'RD' },
+    { name:'Sneha Patel', branch:'CSE', year:'3rd', skills:['Python','Django'], initials:'SP' },
+  ];
+}
+
+// ---- Student Dashboard ----
+function setTab(role, tab) {
+  const prefix = role === 'stu' ? 'stu' : 'org';
+  document.querySelectorAll(`#${role==='stu'?'student-dashboard':'organizer-dashboard'} .nav-link`).forEach(l=>l.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  if (role === 'stu') renderStudentDashboard(tab);
+  else renderOrgDashboard(tab);
+}
+
+function renderStudentDashboard(tab) {
+  const el = document.getElementById('stu-content');
+  const user = currentStudentUser || { name:'Alex Johnson', branch:'CSE', skills:['Python','React','ML'], interests:['AI'] };
+  if (tab === 'overview') {
+    el.innerHTML = `
+      <div class="dash-header">
+        <h1>Good day, ${user.name.split(' ')[0]}! 👋</h1>
+        <p>Here's your personalized opportunity feed based on your skills.</p>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-num" style="color:var(--orange)">5</div><div class="kpi-label">Matched Opportunities</div><div class="kpi-delta up">↑ 2 new today</div></div>
+        <div class="kpi-card"><div class="kpi-num">2</div><div class="kpi-label">Applications Sent</div></div>
+        <div class="kpi-card"><div class="kpi-num" style="color:var(--success)">1</div><div class="kpi-label">Shortlisted</div></div>
+        <div class="kpi-card"><div class="kpi-num">87%</div><div class="kpi-label">Profile Strength</div></div>
+      </div>
+      <div class="dash-grid2">
+        <div class="section-card">
+          <h2>🎯 Top Matches for You</h2>
+          ${demoOpportunities().slice(0,3).map(o=>`
+            <div class="opportunity-item">
+              <div class="opp-icon" style="background:${o.color}">${o.icon}</div>
+              <div class="opp-info">
+                <h4>${o.title}</h4>
+                <p>${o.org} &nbsp;·&nbsp; <span class="badge badge-${o.type==='Internship'?'blue':o.type==='Hackathon'?'orange':'green'}">${o.type}</span></p>
+              </div>
+              <span class="opp-match">${o.match}% match</span>
+            </div>`).join('')}
+        </div>
+        <div class="section-card">
+          <h2>🛠 Your Skills</h2>
+          ${(user.skills||['Python','React','ML']).map((s,i)=>{const pct=[92,85,78,65,55][i]||60; return `
+            <div class="skill-bar-row">
+              <div class="row"><span class="label">${s}</span><span class="pct">${pct}%</span></div>
+              <div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div>
+            </div>`}).join('')}
+        </div>
+      </div>`;
+  } else if (tab === 'matches') {
+    el.innerHTML = `<div class="dash-header"><h1>Matched Opportunities</h1><p>Ranked by skill & interest alignment with your profile.</p></div>
+      <div class="section-card">
+        <h2>All Matches</h2>
+        ${demoOpportunities().map(o=>`
+          <div class="opportunity-item">
+            <div class="opp-icon" style="background:${o.color}">${o.icon}</div>
+            <div class="opp-info">
+              <h4>${o.title}</h4>
+              <p>${o.org} &nbsp;·&nbsp; <span class="badge badge-${o.type==='Internship'?'blue':o.type==='Hackathon'?'orange':'green'}">${o.type}</span></p>
+              <p style="margin-top:5px">${o.skills.map(s=>`<span class="badge badge-purple" style="margin-right:4px">${s}</span>`).join('')}</p>
+            </div>
+            <div style="text-align:right">
+              <div class="opp-match">${o.match}% match</div>
+              <button style="margin-top:8px;padding:6px 14px;border:1.5px solid var(--orange);border-radius:100px;background:transparent;color:var(--orange);font-size:0.82rem;font-weight:600;cursor:pointer">Apply</button>
+            </div>
+          </div>`).join('')}
+      </div>`;
+  } else if (tab === 'applied') {
+    el.innerHTML = `<div class="dash-header"><h1>My Applications</h1><p>Track all your submitted applications.</p></div>
+      <div class="section-card">
+        <h2>Applications (2)</h2>
+        <div class="opportunity-item">
+          <div class="opp-icon" style="background:#E6F0FF">💼</div>
+          <div class="opp-info"><h4>Google Summer of Code 2026</h4><p>Applied on May 5, 2026</p></div>
+          <span class="badge badge-green">Shortlisted</span>
+        </div>
+        <div class="opportunity-item">
+          <div class="opp-icon" style="background:#FFE8DC">⚡</div>
+          <div class="opp-info"><h4>HackFest National 2026</h4><p>Applied on May 8, 2026</p></div>
+          <span class="badge badge-orange">Under Review</span>
+        </div>
+      </div>`;
+  } else if (tab === 'skills') {
+    el.innerHTML = `<div class="dash-header"><h1>Skill Analysis</h1><p>See how your skills align with top opportunities in the market.</p></div>
+      <div class="dash-grid2">
+        <div class="section-card">
+          <h2>Skills vs Demand</h2>
+          ${[['Python',92,98],['React',85,90],['Machine Learning',78,95],['SQL',65,70],['Docker',40,80]].map(([s,you,mkt])=>`
+            <div style="margin-bottom:18px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:0.88rem;font-weight:500">${s}</span><span style="font-size:0.78rem;color:#6B6B6B">You ${you}% · Market ${mkt}%</span></div>
+              <div class="bar-bg" style="margin-bottom:4px"><div class="bar-fill" style="width:${you}%"></div></div>
+              <div class="bar-bg"><div class="bar-fill" style="width:${mkt}%;background:#2563EB;opacity:0.4"></div></div>
+            </div>`).join('')}
+          <div style="display:flex;gap:16px;margin-top:12px;font-size:0.8rem"><span style="display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:12px;height:4px;background:var(--orange);border-radius:2px"></span>Your level</span><span style="display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:12px;height:4px;background:#2563EB;opacity:0.5;border-radius:2px"></span>Market demand</span></div>
+        </div>
+        <div class="section-card">
+          <h2>Recommended to Learn</h2>
+          ${[['LangChain','AI/ML',95],['Kubernetes','DevOps',80],['TypeScript','Web',75],['FastAPI','Backend',70]].map(([s,cat,demand])=>`
+            <div class="opportunity-item">
+              <div class="opp-icon" style="background:#F0EAFF;font-size:1rem">📚</div>
+              <div class="opp-info"><h4>${s}</h4><p>${cat} · ${demand}% job demand</p></div>
+              <button style="padding:5px 12px;border:1.5px solid var(--orange);border-radius:100px;background:transparent;color:var(--orange);font-size:0.8rem;font-weight:600;cursor:pointer">Learn</button>
+            </div>`).join('')}
+        </div>
+      </div>`;
+  } else if (tab === 'profile') {
+    el.innerHTML = `<div class="dash-header"><h1>Your Profile</h1><p>Manage your personal and academic information.</p></div>
+      <div class="section-card" style="max-width:560px">
+        <h2>Personal Info</h2>
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+          <div class="avatar" style="width:60px;height:60px;font-size:1.3rem">${(user.name||'S')[0]}${(user.name||'').split(' ')[1]?.[0]||''}</div>
+          <div><div style="font-weight:700;font-size:1.1rem">${user.name}</div><div style="color:#6B6B6B;font-size:0.9rem">${user.branch||'CSE'} · ${user.year||'3rd Year'}</div><div style="color:#6B6B6B;font-size:0.88rem">${user.college||'IIT Madras'}</div></div>
+        </div>
+        <div style="margin-bottom:12px"><div class="section-title">Skills</div><div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:6px">${(user.skills||['Python','React']).map(s=>`<span class="badge badge-orange">${s}</span>`).join('')}</div></div>
+        <div><div class="section-title">Interests</div><div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:6px">${(user.interests||['AI','Web Dev']).map(i=>`<span class="badge badge-purple">${i}</span>`).join('')}</div></div>
+      </div>`;
+  }
+}
+
+// ---- Organizer Dashboard ----
+function renderOrgDashboard(tab) {
+  const el = document.getElementById('org-content');
+  const user = currentOrgUser || { name:'TechOrg Inc', events: demoEvents() };
+  const events = user.events || demoEvents();
+  const totalStudents = events.reduce((a,e)=>a+(e.students?.length||0),0);
+
+  if (tab === 'overview') {
+    el.innerHTML = `
+      <div class="dash-header">
+        <h1>Dashboard Overview</h1>
+        <p>Welcome back, ${user.name}! Here's how your events are doing.</p>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-num" style="color:#2563EB">${events.length}</div><div class="kpi-label">Active Events</div></div>
+        <div class="kpi-card"><div class="kpi-num">${totalStudents}</div><div class="kpi-label">Total Registrations</div></div>
+        <div class="kpi-card"><div class="kpi-num" style="color:var(--success)">92%</div><div class="kpi-label">Avg. Match Rate</div></div>
+        <div class="kpi-card"><div class="kpi-num">4.8★</div><div class="kpi-label">Org. Rating</div></div>
+      </div>
+      <div class="dash-grid2">
+        <div class="section-card">
+          <h2>📅 Your Events</h2>
+          ${events.map(e=>`
+            <div class="event-row">
+              <div style="width:44px;height:44px;border-radius:12px;background:${e.type==='Hackathon'?'#FFE8DC':e.type==='Workshop'?'#E6F0FF':'#EAF7F0'};display:flex;align-items:center;justify-content:center;font-size:1.2rem">${e.type==='Hackathon'?'⚡':e.type==='Workshop'?'🎓':'💼'}</div>
+              <div class="info">
+                <h4>${e.name}</h4>
+                <p><span class="badge badge-blue">${e.type}</span>&nbsp; Deadline: ${e.deadline||'TBD'}</p>
+              </div>
+              <div style="text-align:right">
+                <div class="event-num">${e.students?.length||0}</div>
+                <div style="font-size:0.78rem;color:#6B6B6B">registered</div>
+              </div>
+            </div>`).join('')}
+        </div>
+        <div class="section-card">
+          <h2>👥 Recent Registrations</h2>
+          ${(events[0]?.students||demoStudents()).slice(0,4).map(s=>`
+            <div class="student-list-item">
+              <div class="stu-avatar">${s.initials||s.name.slice(0,2).toUpperCase()}</div>
+              <div class="stu-info"><h4>${s.name}</h4><p>${s.branch} · ${s.year} Year</p></div>
+              <div style="display:flex;flex-wrap:wrap;gap:4px">${(s.skills||[]).slice(0,2).map(sk=>`<span class="badge badge-orange" style="font-size:0.72rem">${sk}</span>`).join('')}</div>
+            </div>`).join('')}
+        </div>
+      </div>`;
+  } else if (tab === 'events') {
+    el.innerHTML = `<div class="dash-header"><h1>My Events</h1><p>Manage all your posted events.</p></div>
+      <div class="section-card">
+        <h2>All Events</h2>
+        ${events.map(e=>`
+          <div class="event-row">
+            <div style="width:44px;height:44px;border-radius:12px;background:${e.type==='Hackathon'?'#FFE8DC':'#E6F0FF'};display:flex;align-items:center;justify-content:center;font-size:1.2rem">${e.type==='Hackathon'?'⚡':'🎓'}</div>
+            <div class="info">
+              <h4>${e.name}</h4>
+              <p><span class="badge badge-blue">${e.type}</span>&nbsp;·&nbsp; Reg. deadline: ${e.deadline||'TBD'} &nbsp;·&nbsp; Event date: ${e.date||'TBD'}</p>
+              <p style="margin-top:4px">${(e.skills||[]).map(s=>`<span class="badge badge-purple" style="margin-right:4px">${s}</span>`).join('')}</p>
+            </div>
+            <div style="text-align:right">
+              <div class="event-num">${e.students?.length||0}</div>
+              <div style="font-size:0.78rem;color:#6B6B6B">registrations</div>
+            </div>
+          </div>`).join('')}
+      </div>`;
+  } else if (tab === 'students') {
+    const allStudents = events.flatMap(e=>(e.students||[]).map(s=>({...s, event:e.name})));
+    el.innerHTML = `<div class="dash-header"><h1>Registered Students</h1><p>All students who registered for your events.</p></div>
+      <div class="section-card">
+        <h2>Students (${allStudents.length})</h2>
+        ${allStudents.map(s=>`
+          <div class="student-list-item">
+            <div class="stu-avatar">${s.initials||s.name.slice(0,2).toUpperCase()}</div>
+            <div class="stu-info"><h4>${s.name}</h4><p>${s.branch} · ${s.year} Year · ${s.event}</p></div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px">${(s.skills||[]).slice(0,2).map(sk=>`<span class="badge badge-orange" style="font-size:0.72rem">${sk}</span>`).join('')}</div>
+          </div>`).join('')}
+      </div>`;
+  } else if (tab === 'post') {
+    el.innerHTML = `<div class="dash-header"><h1>Post a New Event</h1><p>Fill in the details to attract the right students.</p></div>
+      <div class="section-card" style="max-width:560px">
+        <h2>Event Details</h2>
+        <div class="form-group"><label>Event Name</label><input id="new-ev-name" placeholder="e.g. AI Hackathon 2026"></div>
+        <div class="form-group"><label>Type of Event</label><select id="new-ev-type"><option>Hackathon</option><option>Internship</option><option>Workshop</option><option>Community Service</option><option>Competition</option></select></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="form-group"><label>Registration Deadline</label><input id="new-ev-deadline" type="date"></div>
+          <div class="form-group"><label>Event Date</label><input id="new-ev-date" type="date"></div>
+        </div>
+        <div class="form-group"><label>Seats Available</label><input id="new-ev-seats" type="number" placeholder="e.g. 100"></div>
+        <div class="form-group"><label>Description</label><textarea id="new-ev-desc" placeholder="What will students learn or win?"></textarea></div>
+        <div class="form-group">
+          <label>Required Skills <span style="font-size:0.78rem;color:#6B6B6B">(press Enter)</span></label>
+          <div class="tag-input-area" onclick="this.querySelector('input').focus()" id="new-ev-skills-area">
+            <input id="new-ev-skill-input" placeholder="e.g. Python, ML..." onkeydown="addTag(event,'new-ev-skills-area','new-ev-skill-input','new-ev-skills-list')">
+          </div>
+          <div id="new-ev-skills-list" style="display:none"></div>
+        </div>
+        <button class="btn-form" onclick="postNewEvent()">Post Event 🚀</button>
+      </div>`;
+  }
+}
+
+function postNewEvent() {
+  const name = document.getElementById('new-ev-name').value.trim();
+  if (!name) { alert('Please enter an event name.'); return; }
+  if (!currentOrgUser) currentOrgUser = { name:'TechOrg Inc', events: demoEvents() };
+  currentOrgUser.events.push({ name, type: document.getElementById('new-ev-type').value, deadline: document.getElementById('new-ev-deadline').value, date: document.getElementById('new-ev-date').value, skills: [], students: [] });
+  alert('Event posted successfully! 🎉');
+  renderOrgDashboard('events');
+  document.querySelectorAll('#organizer-dashboard .nav-link').forEach(l=>l.classList.remove('active'));
+  document.querySelectorAll('#organizer-dashboard .nav-link')[1].classList.add('active');
+}
+
+// ---- Stats counter animation ----
+function animateCount(id, end) {
+  let start = 0, step = Math.ceil(end/60);
+  const timer = setInterval(()=>{ start += step; if(start>=end){ document.getElementById(id).textContent=end.toLocaleString(); clearInterval(timer); } else document.getElementById(id).textContent=start.toLocaleString(); },25);
+}
+animateCount('cnt-students', 12480);
+animateCount('cnt-opp', 3240);
+animateCount('cnt-orgs', 180);
+</script>
+</body>
+</html>
