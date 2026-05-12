@@ -56,11 +56,124 @@ Recommendation Logic
 AI Chat Assistant
 Skill-Matching Algorithm
 System Architecture
+
+Complete System Architecture
+
+┌────────────────────────────────────────────────────────────────────┐
+│                         USER LAYER                                │
+│  Student | Faculty | Admin | HOD | System Manager                 │
+└──────────────────────────────┬─────────────────────────────────────┘
+                               │
+                               ▼
+┌────────────────────────────────────────────────────────────────────┐
+│                     PRESENTATION LAYER                            │
+│  - Service Portal UI                                              │
+│  - Web Application (Frontend Integration)                         │
+│  - Mobile Responsive Interface                                    │
+│  - Dashboards (Student / Admin / Analytics)                       │
+│  - Virtual Agent Chatbot Interface                                │
+└──────────────────────────────┬─────────────────────────────────────┘
+                               │
+                               ▼
+┌────────────────────────────────────────────────────────────────────┐
+│                     APPLICATION LAYER                             │
+│  ServiceNow Core Platform Logic                                  │
+│                                                                    │
+│  • Business Rules (Automation Logic)                              │
+│  • Flow Designer (Workflow Automation)                            │
+│  • UI Policies (Field Control Logic)                              │
+│  • UI Actions (Buttons: Approve / Submit / Reject)               │
+│  • Script Includes (Reusable Backend Logic)                      │
+│  • Scheduled Jobs (Auto Tasks / Reports)                         │
+└──────────────────────────────┬─────────────────────────────────────┘
+                               │
+                               ▼
+┌────────────────────────────────────────────────────────────────────┐
+│                        PROCESSING LAYER                           │
+│                                                                    │
+│  WORKFLOW ENGINE                                                  │
+│  ├── Request Submission Flow                                     │
+│  ├── Approval Workflow (Faculty/Admin)                           │
+│  ├── Task Assignment Engine                                      │
+│  ├── Notification Engine                                         │
+│  ├── Incident Resolution Flow                                    │
+│  └── Performance Evaluation Flow                                 │
+└──────────────────────────────┬─────────────────────────────────────┘
+                               │
+                               ▼
+┌────────────────────────────────────────────────────────────────────┐
+│                         DATA LAYER                                │
+│                                                                    │
+│  DATABASE TABLES                                                  │
+│  ├── student_table                                               │
+│  ├── faculty_table                                               │
+│  ├── task_table                                                  │
+│  ├── incident_table                                              │
+│  ├── request_table                                               │
+│  ├── performance_table                                           │
+│  ├── attendance_table                                           │
+│  ├── notification_table                                         │
+│  └── audit_log_table                                            │
+└──────────────────────────────┬─────────────────────────────────────┘
+                               │
+                               ▼
+┌────────────────────────────────────────────────────────────────────┐
+│                       SECURITY LAYER                              │
+│                                                                    │
+│  ROLE BASED ACCESS CONTROL (ACL)                                  │
+│  ├── Student Role (Limited Access)                               │
+│  ├── Faculty Role (Moderate Access)                              │
+│  ├── Admin Role (Full Access)                                    │
+│  ├── HOD Role (Approval + Monitoring)                            │
+│                                                                    │
+│  SECURITY RULES                                                   │
+│  ├── Table-Level Security                                         │
+│  ├── Field-Level Security                                         │
+│  ├── Record-Level Access                                          │
+└──────────────────────────────┬─────────────────────────────────────┘
+                               │
+                               ▼
+┌────────────────────────────────────────────────────────────────────┐
+│                    INTEGRATION LAYER                              │
+│                                                                    │
+│  EXTERNAL CONNECTIVITY                                            │
+│  ├── REST API Integration (Web App Sync)                         │
+│  ├── Email Notification System                                   │
+│  ├── SMS / Alert Gateway (Optional)                              │
+│  ├── Third Party Tools Integration                               │
+│  └── Database / External System Sync                             │
+└──────────────────────────────┬─────────────────────────────────────┘
+                               │
+                               ▼
+┌────────────────────────────────────────────────────────────────────┐
+│                        AI LAYER ⭐                                │
+│                                                                    │
+│  INTELLIGENT SYSTEM MODULES                                      │
+│  ├── AI Performance Predictor                                    │
+│  ├── Student Score Analysis Engine                               │
+│  ├── Risk Detection System (Low Performance Alert)               │
+│  ├── Smart Recommendation System                                 │
+│  ├── Virtual Agent AI Chatbot                                    │
+│  ├── Automated Decision Support System                           │
+└──────────────────────────────┬─────────────────────────────────────┘
+                               │
+                               ▼
+┌────────────────────────────────────────────────────────────────────┐
+│                     REPORTING & ANALYTICS                        │
+│                                                                    │
+│  ├── Performance Dashboards                                     │
+│  ├── KPI Reports                                                │
+│  ├── Student Progress Reports                                   │
+│  ├── System Usage Analytics                                     │
+│  ├── AI Prediction Reports                                      │
+└────────────────────────────────────────────────────────────────────┘
+
 📌 Architecture Definition — Smart Student Connect
 Smart Student Connect is a modular, scalable ServiceNow-based student issue management system.
 It connects students, faculty, and admin teams under one centralized platform to submit, track, assign, and resolve academic and technical requests.
 
 The architecture ensures:
+
 
 Clear separation of roles
 Optimized workflows
@@ -195,6 +308,235 @@ REST API endpoints for external systems
 Supports future AI modules like:
 Predictive Intelligence
 Virtual Agent chatbot
+
+Architectural Layers
+Presentation Layer (UI Layer)
+ServiceNow Forms
+Catalog items (optional)
+Client Scripts
+UI Policies
+UI Actions
+Notifications (Email/SMS)
+
+Purpose:
+Handles user interaction, ticket booking, issue creation, and status tracking.
+
+Business Logic Layer
+
+Contains logic that automates and validates system operations.
+
+Components:
+
+Business Rules
+Script Includes (Reusable functions)
+GlideRecord operations
+Server-side validations
+Data processing logic (fare calculation, auto-ticket id generation)
+
+//script include 
+var TicketUtils = Class.create();
+TicketUtils.prototype = {
+    initialize: function() {},
+
+    calculateFare: function(distance, type) {
+        var base = (type == 'bus') ? 1.5 : 2.0;
+        return distance * base;
+    },
+
+    generatePNR: function() {
+        return 'PNR' + new Date().getTime();
+    },
+
+    type: 'TicketUtils'
+};
+Workflow / Automation Layer
+
+Uses ServiceNow Flow Designer.
+
+Flows Implemented:
+
+Ticket Booking Flow
+Validate data
+Auto-generate PNR
+Update ticket status
+Notify user
+Issue Management Flow
+Issue creation
+Auto assign to officer
+Officer resolve → notify citizen
+Data Layer (Tables + Fields)
+
+This is the MOST important architecture part.
+Use this EXACT structure for high scores.
+
+🔵 Core Tables
+1) Ticket Booking Table — u_ticket_booking
+
+Stores all ticket booking details.
+
+Field Name	Type	Description
+u_passenger_name	String	Name of user
+u_aadhaar	String	Aadhaar number
+u_travel_type	Choice (Bus/Train)	Mode
+u_source	String	From location
+u_destination	String	To location
+u_journey_date	Date	Travel date
+u_seat_number	String	Seat
+u_fare	Integer	Auto calculated
+u_pnr	String	Auto generated
+u_status	Choice (Booked/Cancelled/Completed)	Status
+
+2) Issue Table — u_ticket_issue
+
+Tracks complaints/issues related to ticket booking.
+
+Field Name	Type	Description
+u_issue_type	Choice	Refund/Seat/Delay/etc
+u_issue_description	String	Problem details
+u_ticket_reference	Reference (u_ticket_booking)	Linked ticket
+u_status	Choice	Open/Assigned/Resolved
+u_officer	Reference (sys_user)	Assigned officer
+u_resolution	String	Final resolution
+u_resolved_date	Date	Closed date
+3) Seat Availability Table — u_seat_availability (optional but boosts marks)
+Field	Type	Description
+u_bus_or_train_no	String	Vehicle ID
+u_date	Date	Journey date
+u_available_seats	Integer	Remaining seats
+4) Master Tables
+u_route_master
+u_vehicle_master
+u_fare_master
+
+🔵 Security Layer (Roles)
+Role	Permissions
+citizen	Book tickets, view bookings, raise issues
+officer	View issues, resolve issues, update status
+admin	Full access, table configuration, adding routes/vehicles
+
+ACLs used:
+
+Read restrictions
+Write restrictions
+Role-based access on forms
+🔵 Integration Layer (Future Scope + Score Booster)
+
+Integrated / planned:
+
+Seat Availability API (Simulated Script Include)
+Email/SMS Notifications
+UPI Payment Gateway (future)
+AI-based recommendation engine (future)
+🔵 System Data Flow (AI-Friendly)
+1. Citizen books ticket
+
+→ UI Form
+→ Business Rules validate
+→ Script Include calculates fare
+→ Flow Designer generates PNR
+→ Record stored in u_ticket_booking
+→ Notification sent
+
+2. Citizen raises issue
+
+→ Issue form
+→ Flow auto assigns officer
+→ Officer resolves
+→ Citizen notified
+
+3. Admin maintains master data
+
+→ Routes, vehicles, fares
+
+🏗️ 1. UI Architecture (Frontend Layer)
+Users (Student / Faculty / Admin)
+            │
+            ▼
+         Web App
+            │
+   ┌────────┼─────────┐
+   ▼        ▼         ▼
+Forms   Dashboards   Chatbot (VA)
+   │        │         │
+   └────────┴─────────┘
+        Interaction Layer
+
+👉 Purpose:
+
+User interaction with system
+Data entry + viewing status + chatbot support
+🏗️ 2. Data / Database Architecture
+          ServiceNow Platform
+                  │
+      ┌───────────┼───────────┐
+      ▼           ▼           ▼
+ student_table  task_table  incident_table
+      ▼           ▼           ▼
+ request_table performance_table audit_logs
+
+👉 Purpose:
+
+Stores all system data
+Structured table-based storage
+Supports reporting & analytics
+⚙️ 3. Workflow / Automation Architecture
+User Action (Submit Request)
+            │
+            ▼
+     Flow Designer Trigger
+            │
+   ┌────────┼────────┐
+   ▼        ▼        ▼
+Assign   Notify   Update Status
+Task     Email    Database
+            │
+            ▼
+        Completion
+
+👉 Purpose:
+
+Automates processes
+Reduces manual work
+Handles approvals & notifications
+🔐 4. Security Architecture (ACL + Roles)
+            User Login
+                 │
+                 ▼
+          Role Validation
+   ┌────────────┼────────────┐
+   ▼            ▼            ▼
+Student      Faculty       Admin
+   │            │            │
+   ▼            ▼            ▼
+ ACL Rules (Read / Write / Delete Access)
+                 │
+                 ▼
+         Secure Data Access
+
+👉 Purpose:
+
+Controls who can access what
+Protects sensitive data
+Role-based security system
+🤖 5. AI + Integration Architecture
+          ServiceNow System
+                 │
+     ┌───────────┼────────────┐
+     ▼                        ▼
+ AI Module               External Systems
+     │                        │
+ ┌───┼──────────┐      ┌──────┼─────────┐
+ ▼   ▼          ▼      ▼      ▼         ▼
+Score Chatbot Prediction Email  Web App API
+Analysis VA     Engine   Alerts  Integration
+
+👉 Purpose:
+
+Predict student performance
+AI chatbot support
+External web/app integration
+Smart alerts & automation
+
 🌐 Overall System Architecture Summary
 Smart Student Connect uses a layered architecture combining UI, process automation, data management, and security layers to deliver a seamless student–staff communication platform.
 
@@ -220,3 +562,4 @@ Integration Layer
 GitHub sync, REST APIs, External data connectors
 
 This architecture ensures performance, clarity, scalability, and AI-readiness for future enhancements such as predictive ticket routing and automated resolution suggestions.
+
