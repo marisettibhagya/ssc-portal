@@ -1,0 +1,11 @@
+Future Scope
+
+In the future, the system can be enhanced with real-time seat availability integration, live tracking of buses/trains, automated refund processing, 
+AI-based ticket recommendations, multi-language chatbot support for booking assistance, and integration with UPI/Wallet payments. 
+The platform can also include predictive maintenance alerts for vehicles and a feedback-driven route optimization system.
+
+Requirement fullfillment 
+
+All core requirements of the system have been fulfilled including ticket booking, seat selection, passenger details capture, automatic ticket generation, 
+payment status update, issue reporting, issue assignment, resolution tracking, notification updates, and role-based access for citizen/officer/admin. 
+Additional validations and workflow automation have been added to improve accuracy and user experience.
